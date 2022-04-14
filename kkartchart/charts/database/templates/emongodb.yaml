@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-{{ .Chart.Name }}-mongo
+  labels:
+    app: {{ .Release.Name }}-{{ .Chart.Name }}-mongo
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-{{ .Chart.Name }}-mongo
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-{{ .Chart.Name }}-mongo
+    spec:
+      containers:
+      - name: {{ .Release.Name }}-{{ .Chart.Name }}-mongo
+        image: {{ .Values.image.mongo.repository }}:{{ .Values.image.mongo.tag }}
+        ports:
+        - name: emongodb-port
+          containerPort: 27017
+        volumeMounts:
+            - name: {{ .Release.Name }}-{{ .Chart.Name }}-mongo
+              mountPath: /data/db
+        env: 
+         - name: MONGO_INITDB_DATABASE
+           valueFrom:
+            configMapKeyRef:
+              name: {{ .Release.Name }}-{{ .Chart.Name }}-dbconfig
+              key: mongodbname
+    
+      volumes:
+      - name: {{ .Release.Name }}-{{ .Chart.Name }}-mongo
+        persistentVolumeClaim:
+          claimName: {{ .Release.Name }}-{{ .Chart.Name }}-mongo 
+

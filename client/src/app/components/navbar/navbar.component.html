@@ -1,0 +1,47 @@
+<nav class="navbar navbar-expand-sm navbar-dark bg-primary">
+  <div class="container-fluid">
+    <!-- spinner -->
+    <div *ngIf="isLoading" class="spinner-border text-light" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+    <!-- Navbar title -->
+    <a class="navbar-brand" routerLink="" routerLinkActive="active">
+      <i class="fa fa-shopping-cart pr-2"></i><strong> E-MART</strong></a
+    >
+    <!-- Navbar collapse button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mobile-nav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <!-- links -->
+    <div class="collapse navbar-collapse" id="mobile-nav">
+      <ul class="navbar-nav mr-auto">
+        <li *ngIf="authService.loggedIn()" class="nav-item">
+          <a class="nav-link" routerLink="/dashboard" routerLinkActive="active">Shop Now!</a>
+        </li>
+      </ul>
+      <!-- shop info -->
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#" routerLinkActive="active"
+            ><span class="badge badge-dark mr-1"> <i class="fa fa-phone pr-2"></i>1800-00-66-66</span></a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="mailto:info@emart.com" routerLinkActive="active"
+            ><span class="badge badge-dark"> <i name="envelope" class="pr-2"></i>info@emart.com</span></a
+          >
+        </li>
+        <!-- Login/ Register/ Logout -->
+        <li *ngIf="!authService.loggedIn()" class="nav-item">
+          <a class="nav-link  text-white " routerLink="/login" routerLinkActive="active"> <b>Login</b></a>
+        </li>
+        <li *ngIf="!authService.loggedIn()" class="nav-item">
+          <a class="nav-link text-white " routerLink="/register" routerLinkActive="active"> <b>Register</b></a>
+        </li>
+        <li *ngIf="authService.loggedIn()" (click)="logout()" class="nav-item" style="cursor:pointer">
+          <a class="nav-link">Logout</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

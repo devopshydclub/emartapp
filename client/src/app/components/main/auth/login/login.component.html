@@ -1,0 +1,73 @@
+
+<!-- <img src="../../../../../assets/images/online-shopping-rightside.jpg" alt=""> -->
+<div class="container top-container">
+<div class="container card login-comp p-2 ">
+  <!-- spinner -->
+  <div *ngIf="isLoading" class="spinner-border text-danger" role="status"><span class="sr-only">Loading...</span></div>
+  <!-- form -->
+  <form #loginForm="ngForm" (ngSubmit)="onLoginUser(loginForm)" *ngIf="!isLoading" novalidate>
+    <p class="text-white">Sign-In</p>
+    <div *ngIf="isEmpty" class="alert alert-danger alert-dismissible fade show">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>{{ warning }}
+    </div>
+    <!-- email -->
+    <div class="form-group">
+      <input
+        type="email"
+        name="email"
+        [ngClass]="{ 'is-invalid': emailInput.errors && emailInput.touched }"
+        class="form-control"
+        placeholder="E-Mail (enter in lowercase letters)"
+        ngModel
+        #emailInput="ngModel"
+        required
+        pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
+      />
+      <div [hidden]="!emailInput.errors?.required" class="invalid-feedback">Email is required</div>
+      <div [hidden]="!emailInput.errors?.pattern" class="invalid-feedback">Email is not valid</div>
+    </div>
+    <!-- password -->
+    <div class="form-group">
+      <input
+        type="password"
+        name="password"
+        [ngClass]="{ 'is-invalid': passwordInput.errors && passwordInput.touched }"
+        class="form-control"
+        placeholder="Password"
+        ngModel
+        #passwordInput="ngModel"
+        required
+        minlength="4"
+      />
+      <div [hidden]="!passwordInput.errors?.required" class="invalid-feedback">Password is required</div>
+      <div [hidden]="!passwordInput.errors?.minlength" class="invalid-feedback">
+        Password must be at least 4 characters
+      </div>
+    </div>
+    <!-- submit -->
+    <button type="submit" class="btn btn-warning">Login</button>
+  </form>
+</div> <!---form container closed-->
+</div><!---top container container closed-->
+<!-- The Modal -->
+<div class="modal" id="loginModal" [ngStyle]="{ display: display }">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header bg-dark text-white text-center">
+        <h4 class="modal-title" [innerHTML]="modalHeader ? modalHeader : 'Success!'"></h4>
+        <button type="button" (click)="onCloseHandled()" class="close" data-dismiss="modal" routerLink="/">
+          &times;
+        </button>
+      </div>
+      <!-- Modal body -->
+      <div class="modal-body" *ngIf="modalBody" [innerHTML]="modalBody"></div>
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" (click)="onCloseHandled()" class="btn btn-danger" data-dismiss="modal" routerLink="/">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

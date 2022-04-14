@@ -1,0 +1,18 @@
+config:
+  mongodbname: epoc
+  mongo_uri: mongodb://emongo:27017/epoc
+  mysqldbname: books
+image:
+  mongo: 
+    repository: mongo
+    tag: 4
+  mysql: 
+    repository: mysql
+    tag: 5.7.25
+service:
+  mongo:
+    port: 27017
+    type: ClusterIP
+  mysql:
+    port: 3306
+    type: ClusterIP

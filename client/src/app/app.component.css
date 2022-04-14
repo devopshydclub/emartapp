@@ -1,0 +1,7 @@
+.container-fluid {
+    /* height: 200vh; */
+    /* background:linear-gradient(60deg,#162466,#eeeeee);  */
+    /* background: url('../assets/images/banners/bbg14.jpg') no-repeat center center; */
+    background: rgb(10, 35, 63);
+    background-size:  100% 100%;
+}

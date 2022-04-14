@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "kkartcharts.fullname" . }}-test-connection"
+  labels:
+    {{- include "kkartcharts.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['{{ include "kkartcharts.fullname" . }}:{{ .Values.service.port }}']
+  restartPolicy: Never

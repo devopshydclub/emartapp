@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-{{ .Chart.Name }}-mysql
+  labels:
+    app: {{ .Release.Name }}-{{ .Chart.Name }}-mysql
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-{{ .Chart.Name }}-mysql
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-{{ .Chart.Name }}-mysql
+    spec:
+      containers:
+      - name: {{ .Release.Name }}-{{ .Chart.Name }}-mysql
+        image: {{ .Values.image.mysql.repository }}:{{ .Values.image.mysql.tag }}
+        ports:
+        - name: emysqldb-port
+          containerPort: 3306
+        volumeMounts:
+            - name: {{ .Release.Name }}-{{ .Chart.Name }}-mysql
+              mountPath: /var/lib/mysql
+        env: 
+         - name: MYSQL_DATABASE
+           valueFrom:
+            configMapKeyRef:
+              name: {{ .Release.Name }}-{{ .Chart.Name }}-dbconfig
+              key: mysqldbname
+
+         - name: MYSQL_ROOT_PASSWORD
+           valueFrom:
+             secretKeyRef:
+               name: {{ .Release.Name }}-{{ .Chart.Name }}-dbsecret
+               key: mysqldb-pass
+      volumes:
+      - name: {{ .Release.Name }}-{{ .Chart.Name }}-mysql
+        persistentVolumeClaim:
+          claimName: {{ .Release.Name }}-{{ .Chart.Name }}-mysql  
+

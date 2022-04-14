@@ -1,0 +1,15 @@
+.register-comp {
+   /* // background-color: rgb(255, 217, 160); */
+
+   background-color: rgb(65, 62, 228);
+}
+
+.register-comp {
+    width:400px;
+    margin: auto;
+}
+.top-container {
+    width: 1000px;
+    height: 480px;
+    padding-top:70px;
+}

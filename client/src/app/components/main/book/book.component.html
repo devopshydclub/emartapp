@@ -1,0 +1,70 @@
+<p>book works!</p> 
+<button (click)="abc()" class="btn btn-outline-primary mx-2">All Books</button>
+<button (click)="addBookFlag()" class="btn btn-outline-primary mx-2">Add Book</button>
+<button (click)="displayAllPublishedBooks()" class="btn btn-outline-primary mx-2">Published Books</button>
+<h2>Book data</h2>
+<!-- <div *ngFor="let b of books">
+<h3>{{b.tile}} details</h3>
+<h3>{{b.author}}</h3>
+<h3>{{b.publisher}}</h3>
+<h3>{{b.published}}</h3> </div> -->
+<hr>
+<div *ngIf="displayAllBooks"> 
+<div class="row">
+    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 semi-bold">Name</div>
+    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 semi-bold">Author</div>
+    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 semi-bold">Publisher</div>
+    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 semi-bold">Ispublished</div>
+                
+</div>
+<div class="row" *ngFor="let b of books" >
+    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">{{b.title}} </div>
+    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">{{b.author}}</div>
+    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">{{b.publisher}}</div>
+    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">{{b.published}}</div> 
+</div> <hr>
+</div>
+
+<!-- <h3>{{bk}}</h3> -->
+<div *ngIf="displayAddBookForm">
+<form action="" method="POST"  role="form">
+
+    <div class="form-group">
+        <label class="sr-only" for="">Title</label>
+        <input type="email" class="form-control" id="" placeholder="Title" #title>
+    </div>  <br>
+    <div class="form-group">
+        <label class="sr-only" for="">Author</label>
+        <input type="email" class="form-control" id="" placeholder="Author" #author> 
+    </div>  <br>
+    <div class="form-group">
+        <label class="sr-only" for="">Publisher</label>
+        <input type="email" class="form-control" id="" placeholder="Publisher" #publisher> 
+    </div>  <br>
+
+    
+
+    <button type="submit" (click)="addBook(title,author,publisher)" class="btn btn-primary">Submit</button>
+</form>
+</div>
+
+<div *ngIf="displayPublishedBooks" class="published-books"> 
+    <div class="row">
+        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 semi-bold">Name</div>
+        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 semi-bold">Author</div>
+        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 semi-bold">Publisher</div>
+        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 semi-bold">Description</div>
+        <!-- <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 semi-bold">Purchase</div> -->
+                    
+    </div> <hr>
+    <div class="row" *ngFor="let b of books_p" >
+        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">{{b.title}} </div>
+        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">{{b.author}}</div>
+        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">{{b.publisher}}</div>
+        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">{{b.description}}</div> 
+        <!-- <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+            <button class="btn btn-warning" ></button>
+        </div>  -->
+    </div> <hr>
+    </div>
+    

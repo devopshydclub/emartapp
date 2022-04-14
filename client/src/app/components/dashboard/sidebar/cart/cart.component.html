@@ -1,0 +1,76 @@
+<!-- resume shopping -->
+<div class="text-right p-1">
+  <button *ngIf="user?.cart.items.length > 0 && isOrdered" (click)="onBackToShop()" class="btn btn-danger">
+    <i class="fa fa-chevron-circle-left mr-2"></i>Back to shop
+  </button>
+</div>
+<!-- spinner -->
+<div *ngIf="isLoading" class="spinner-border text-danger" role="status">
+  <span class="sr-only">Loading...</span>
+</div>
+<!-- search products in receipt -->
+<div class="px-1">
+  <input
+    *ngIf="isOrdered"
+    type="text"
+    name="search"
+    class="form-control"
+    placeholder="Search for products on shopping cart"
+    [(ngModel)]="filteredStatus"
+  />
+</div>
+<!-- alerts -->
+<!-- empty cart -->
+<div class="alert alert-warning alert-dismissible" *ngIf="user?.cart.items.length == 0">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <strong>Start shopping!</strong>
+  <p>Add items to your cart.</p>
+</div>
+<!-- errors -->
+<div class="alert alert-danger alert-dismissible" *ngIf="isError">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>{{ errorBody }}
+</div>
+<!-- Removing all products -->
+<div class="text-right p-1">
+  <button
+    *ngIf="user?.cart.items.length > 0 && !isOrdered && user?.cart.status !== 'pending'"
+    (click)="onEmptyCart()"
+    class="btn btn-dark"
+  >
+    <i class="fa fa-trash mr-2"></i>Remove All Products from Cart
+  </button>
+</div>
+<!-- items in cart -->
+<div *ngIf="user?.cart.status !== 'closed'" class="row p-1">
+  <div class="col">
+    <ul class="list-group">
+      <li *ngFor="let item of user?.cart.items" class="list-group-item bg-light">
+        <div class="d-flex">
+          <div class="mr-auto"><span [innerHTML]="item.prod_name | highlight: filteredStatus"></span></div>
+          <div>
+            <span class="badge badge-info mr-1">Quantity: {{ item.quantity }}</span>
+          </div>
+          <div>
+            <span class="badge badge-info mr-1">Price: {{ item.prod_total | currency: "INR":"symbol":"1.2-2" }}</span>
+          </div>
+          <div *ngIf="!isOrdered && (user?.cart.status == 'open' || user?.cart.status == 'new')">
+            <button (click)="onRemoveProductFromCart(item)" class="btn badge badge-danger text-right">
+              <i class="fa fa-times"></i>
+            </button>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+<!-- cart total -->
+<div class="row p-1">
+  <div class="col">
+    <span class="btn btn-dark disabled">Total: {{ total | currency: "INR":"symbol":"1.2-2" }}</span>
+  </div>
+  <!-- order -->
+  <div *ngIf="(!isOrdered && user?.cart.status == 'open') || user?.cart.status == 'new'" class="col text-right">
+    <button (click)="onOrder()" class="btn btn-danger" [disabled]="user?.cart.items.length == 0">Order</button>
+  </div>
+</div>
+<app-order-form *ngIf="isOrdered" [user]="user"></app-order-form>

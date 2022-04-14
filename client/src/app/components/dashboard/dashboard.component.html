@@ -1,0 +1,55 @@
+<!-- spinner -->
+<div *ngIf="isLoading" class="spinner-border text-danger" role="status">
+  <span class="sr-only">Loading...</span>
+</div>
+
+<!-- dashboard -->
+<div class="row mt-1">
+
+  <!-- <div class="mr-2 p-1">
+    <button class="btn btn-danger m-2" (click)="isSidenavOpen = !isSidenavOpen">
+      <fa name="shopping-basket"></i>
+    </button>
+    <div *ngIf="isSidenavOpen" class="col-md card m-2 p-1">
+      <app-sidebar [user]="user"></app-sidebar>
+    </div>
+  </div> -->
+
+  <div class="col-md bg-light p-2"><app-products [user]="user"></app-products></div>
+
+
+  <div class="mr-2 p-1">
+    <button class="btn btn-warning m-2" (click)="isSidenavOpen = !isSidenavOpen">
+      <i class="fa fa-shopping-basket"></i>
+       <span style="color: white;font-weight: bold;margin-left: 6px;">CART</span> 
+    </button>
+    <div *ngIf="isSidenavOpen" class="col-md card m-2 p-1">
+      <app-sidebar [user]="user"></app-sidebar>
+    </div>
+  </div>
+
+
+</div>
+
+<!-- The Modal -->
+<div class="modal" id="dashboardModal" [ngStyle]="{ display: display }">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header bg-dark text-white text-center">
+        <h4 class="modal-title" [innerHTML]="modalHeader ? modalHeader : 'Success!'"></h4>
+        <button type="button" (click)="onCloseHandled()" class="close" data-dismiss="modal" routerLink="/">
+          &times;
+        </button>
+      </div>
+      <!-- Modal body -->
+      <div class="modal-body" *ngIf="modalBody" [innerHTML]="modalBody"></div>
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" (click)="onCloseHandled()" class="btn btn-danger" data-dismiss="modal" routerLink="/">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

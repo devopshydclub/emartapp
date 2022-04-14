@@ -1,0 +1,50 @@
+/* * {
+    background-color: aquamarine;
+} */
+
+ .data-section {
+    
+        /* background-image: linear-gradient(90deg, #2a2a2c, #2a2c2d); */
+        /* background-color: rgba(241, 217, 172, 0.63) !important; */
+        background-image: none !important;
+
+}
+button{ margin:0px 5px;}
+
+.card{
+    margin-top:10px;
+    width:250px;
+    box-shadow: rgb(92, 92, 90) 0 6px 6px 5px;
+    border: 1px solid black;
+}
+.card-img-top {
+    height:100px;
+    width:100px;
+    margin:auto;
+}
+.card-title,.card-body{
+    text-align: center;
+}
+/* app-main {
+    
+     background-image: linear-gradient(45deg, rgb(233, 79, 79), rgb(93, 93, 129));
+}  */
+button.btn.btn-success  {
+    /* width:120px; */
+    height: 40px;
+    padding:5px -15px;
+    vertical-align: center;
+    font-size: 14px;
+}
+button.btn.btn-warning {
+    /* width:100px; */
+    height: 40px;
+    padding:5px -15px;
+    vertical-align: center;
+    font-size: 14px;
+}
+
+.offercontent-box{
+    border:2px solid lightcoral;
+    /* background: rgb(3, 124, 78); */
+}

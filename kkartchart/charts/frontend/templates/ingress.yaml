@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-{{ .Chart.Name }}-client
+spec:
+  tls:
+    - hosts:
+      - {{ .Values.ingress.host }}
+      # This assumes tls-secret exists and the SSL
+      # certificate contains a CN for foo.bar.com
+      secretName: k8sengineers-tls
+  ingressClassName: nginx
+  rules:
+  # Use the host you used in your kubernetes Ingress Configurations
+  - host: {{ .Values.ingress.host }}
+    http:
+      paths:
+      - path: {{ .Values.ingress.path.client }}
+        pathType: Prefix
+        backend:
+          service:
+           name: {{ .Release.Name }}-{{ .Chart.Name }}-client
+           port: 
+             number: 4200

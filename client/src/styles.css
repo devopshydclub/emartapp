@@ -1,0 +1,61 @@
+/* You can add global styles to this file, and also import other style files */
+
+.invalid-feedback {
+    color: rgb(255, 251, 0) !important;
+    
+}
+
+/* nav.bg-primary,div.bg-primary{
+    background-color: brown !important;
+}
+
+.bg-primary,.btn-primary{
+    background-color: brown !important;
+}
+.text-primary{
+    color: brown !important;
+} */
+/*  v1 colors */
+
+nav.bg-primary,div.bg-primary, .bg-primary,.btn-primary{
+    background-color: #5bccf6 !important;
+ 
+}
+.data-section  {
+    background-color: #fcde67 !important;
+
+}
+.login-comp {
+   
+
+    background-color: #5bccf6 !important;
+   
+    width: 400px; 
+}
+.register-comp {
+    background-color: #5bccf6 !important;
+    width:400px;
+    margin: auto;
+}
+
+/*  v2 colors */
+/* nav.bg-primary,div.bg-primary, .bg-primary,.btn-primary{
+    background-color: #5c2018 !important;
+ 
+}
+.data-section  {
+    background-color: #d4a59a !important;
+
+}
+.login-comp {
+    
+
+    background-color: #4285f4 !important;
+   
+    width: 400px; 
+}
+.register-comp {
+    background-color: #4285f4 !important;
+    width:400px;
+    margin: auto;
+} */

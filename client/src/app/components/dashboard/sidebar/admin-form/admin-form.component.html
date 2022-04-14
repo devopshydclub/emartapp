@@ -1,0 +1,107 @@
+<div class="admin-panel-section">
+  <div class="d-flex px-1 mb-1 align-items-center ">
+    <!-- spinner -->
+    <div *ngIf="isLoading" class="spinner-border text-danger" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+    <h6 class="pl-2 mr-auto">{{ mode == "add" ? "Create Product" : "Edit Product" }}</h6>
+    <button (click)="onAddProduct()" type="button" class="btn btn-dark mr-1"><i class="fa fa-plus"></i></button>
+    <button (click)="onDeleteProduct()" type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+  </div>
+  <div *ngIf="!isHidden" class="p-1">
+    <!-- product form -->
+    <form #adminForm="ngForm" (ngSubmit)="mode == 'add' ? onSaveNewProduct(adminForm) : onUpdateProduct(adminForm)">
+      <!-- warning -->
+      <div *ngIf="isEmpty && !isOK" class="alert alert-danger">{{ warning }}</div>
+      <div *ngIf="isEmpty && isOK" class="alert alert-success">{{ warning }}</div>
+      <!-- warning -->
+      <!-- product name -->
+      <div class="form-group">
+        <input
+          type="text"
+          name="prod_name"
+          class="form-control"
+          id="prod_name"
+          [(ngModel)]="currentProduct.prod_name"
+          #prod_name="ngModel"
+          placeholder="Product Name"
+        />
+      </div>
+      <!-- image -->
+      <div class="form-group">
+        <h6><small class="text-muted">Please upload only files of type .JPEG, .JPG, or .PNG</small></h6>
+        <input
+          type="file"
+          (change)="onFileSelected($event)"
+          (click)="onFileSelected($event)"
+          style="display:none"
+          #pickedFile
+        />
+        <button type="button" (click)="pickedFile.click()" class="btn btn-dark">
+          <i name="" class="fa fa-image mr-2"></i>Product Image
+        </button>
+        <span class="ml-3">{{ selectedFile?.name | shorten: 15 }}</span>
+      </div>
+      <!-- price -->
+      <div class="form-group">
+        <input
+          type="number"
+          name="price"
+          class="form-control"
+          id="price"
+          [(ngModel)]="currentProduct.price"
+          #price="ngModel"
+          placeholder="Price"
+        />
+      </div>
+      <!-- category -->
+      <span><h5>Choose Category</h5></span>
+      <div class="form-group">
+        {{ selectedCategory }}
+        <select
+          type="text"
+          name="category"
+          class="form-control"
+          id="category"
+          [(ngModel)]="currentProduct.category ? currentProduct.category : initCategory"
+          #category="ngModel"
+        >
+          
+          <option *ngFor="let category of categories" [value]="category?.cat_name">{{ category?.cat_name }}</option>
+        </select>
+      </div>
+      <!-- submit button -->
+      <button type="submit" class="btn btn-primary">{{ mode == "add" ? "Add Product" : "Update Product" }}</button>
+    </form>
+    <!-- category form -->
+    <div class="card bg-light p-3 mt-3">
+      <form #categoryForm="ngForm" (ngSubmit)="onAddCategory(categoryForm)">
+        <div class="form-group">
+          <!-- <strong>Can't find the category you need?</strong><br />Add a new one to the scroll list! -->
+          <strong>Unable to find the category of your wish?</strong><br />Add a new category to the category list!
+
+        </div>
+        <div class="form-group">
+          <input
+            type="text"
+            name="category_add"
+            id="category_add"
+            placeholder="New Category"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': category_add.errors && category_add.touched }"
+            ngModel
+            #category_add="ngModel"
+            required
+            minlength="2"
+          />
+          <div [hidden]="!category_add.errors?.required" class="invalid-feedback">Category field is required</div>
+          <div [hidden]="!category_add.errors?.minlength" class="invalid-feedback">
+            Category must be at least 2 characters
+          </div>
+        </div>
+        <!-- submit button -->
+        <button type="submit" class="btn btn-primary">Add Category</button>
+      </form>
+    </div>
+  </div>
+</div>

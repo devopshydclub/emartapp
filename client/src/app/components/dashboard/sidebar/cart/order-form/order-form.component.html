@@ -1,0 +1,126 @@
+<div class="mt-1 px-1">
+  <div class="card bg-light">
+    <div class="card-header bg-dark text-white">Order Details</div>
+    <div class="card-body">
+      <!-- spinner -->
+      <div *ngIf="isLoading" class="spinner-border text-danger" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+      <!-- form -->
+      <form #orderForm="ngForm" (ngSubmit)="onFinalizeOrder(orderForm)" novalidate>
+        <!-- warning -->
+        <div *ngIf="isEmpty" class="alert alert-danger">{{ warning }}</div>
+        <!-- warning -->
+        <span><i name="fa fa-calendar mr-2"></i>Shipping Details</span>
+        <hr />
+        <!-- city -->
+        <div class="form-group">
+          <label for="city">Select city:</label>
+          <select
+            type="text"
+            name="city"
+            class="form-control"
+            id="city"
+            [(ngModel)]="user.city"
+            #city="ngModel"
+            required
+          >
+            <option *ngFor="let city of cities" [ngValue]="city">{{ city }}</option>
+          </select>
+        </div>
+        <!-- street -->
+        <div class="form-group">
+          <label for="street">Street Address:</label>
+          <input
+            type="text"
+            name="street"
+            class="form-control"
+            id="street"
+            [ngClass]="{ 'is-invalid': street.errors && street.touched }"
+            [(ngModel)]="user.street"
+            #street="ngModel"
+            minlength="2"
+            required
+          />
+          <div [hidden]="!street.errors?.required" class="invalid-feedback">Street is required</div>
+          <div [hidden]="!street.errors?.minlength" class="invalid-feedback">Address must be at least 2 characters</div>
+        </div>
+        <!-- shipping date -->
+        <div class="form-group">
+          <label for="ship">Shipping Date:</label>
+          <input
+            type="date"
+            name="ship"
+            class="form-control"
+            id="ship"
+            [ngClass]="{ 'is-invalid': ship.errors && ship.touched }"
+            [(ngModel)]="currentDate"
+            #ship="ngModel"
+            min="getCurrentDate()"
+            required
+          />
+          <div [hidden]="!street.errors?.required" class="invalid-feedback">Shipping date is required</div>
+        </div>
+        <span><i class="fa fa-credit-card mr-2"></i>Payments</span>
+        <hr />
+        <!-- credit card -->
+        <div class="form-group">
+          <label for="credit">Credit Card:</label>
+          <input
+            type="text"
+            name="credit"
+            class="form-control"
+            id="credit"
+            [ngClass]="{ 'is-invalid': credit.errors && credit.touched }"
+            ngModel
+            #credit="ngModel"
+            placeholder="Enter credit card number"
+            minlength="16"
+            maxlength="16"
+            pattern="^[0-9]+$"
+            required
+          />
+          <div [hidden]="!credit.errors?.required" class="invalid-feedback">Credit card number is required</div>
+          <div [hidden]="!credit.errors?.pattern" class="invalid-feedback">Credit card number is invalid</div>
+          <div [hidden]="!credit.errors?.minlength" class="invalid-feedback">
+            Credit card number must contain 16 digits
+          </div>
+        </div>
+        <!-- submit -->
+        <button type="submit" class="btn btn-dark"><i name="fa fa-check-circle mr-2"></i>Confirm & Pay</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- The Modal -->
+<div class="modal" id="myModal" [ngStyle]="{ display: display }">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header bg-dark text-white text-center">
+        <h4 class="modal-title" [innerHTML]="modalHeader ? modalHeader : 'Order has been processed successfully!'"></h4>
+        <button type="button" class="close" data-dismiss="modal" routerLink="/">
+          &times;
+        </button>
+      </div>
+      <!-- Modal body -->
+      <div class="modal-body" *ngIf="!modalBody">
+        <div class="text-center mx-auto">
+          <!-- spinner -->
+          <div *ngIf="isLoading" class="spinner-border text-danger" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+        If you wish, you can <button class="btn btn-danger" (click)="download()" routerLink="/">Download receipt</button> in pdf format.
+      </div>
+      <div class="modal-body" *ngIf="modalBody" [innerHTML]="modalBody"></div>
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal" routerLink="/">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

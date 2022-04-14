@@ -1,0 +1,465 @@
+
+ <!----EXPLORE starts---->
+
+
+ <div class="container">
+
+
+  <!-- Each carousel needs a unique ID -->
+  <div id="carousel-id" class="carousel slide" data-ride="carousel">
+
+    <div class="carousel-inner" role="listbox">
+      <div class="carousel-item active">
+        <img src="../../../assets/images/banners/banner-slider1.png" alt="First slide" class="img-fluid"
+        style="width: 1200px;height:400px;">
+      </div>
+      <div class="carousel-item">
+        <img src="../../../assets/images/banners/banner-bg5.jpg" alt="Second slide" class="img-fluid"
+        style="width: 1200px;height:400px;">
+      </div>
+      <div class="carousel-item">
+        <img src="../../../assets/images/banners/banner-slider2.jpg" alt="Third slide" class="img-fluid"
+        style="width: 1200px;height:400px;">
+      </div>
+      <div class="carousel-item">
+        <img src="../../../assets/images/banners/banner-slider3.jpg" alt="Fourth slide" class="img-fluid"
+        style="width: 1200px;height:400px;">
+      </div>
+    </div>
+
+    <ol class="carousel-indicators">
+      <li data-target="#carousel-" data-slide-to="0" class="active"></li>
+      <li data-target="#carousel" data-slide-to="1"></li>
+      <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+      <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+    </ol>
+    <p class="text-xs-center">
+      <a class="" href="#carousel-id" role="button" data-slide="prev">
+        <span class="icon-prev" aria-hidden="true"></span> Previous
+      </a>&emsp;
+      <a class="l" href="#carousel-id" role="button" data-slide="next">
+        <span class="icon-next" aria-hidden="true"></span> Next
+      </a>
+    </p>
+    <!-- /.text-center -->
+  </div>
+<!-- /.carousel -->
+  
+</div>
+<!-- /.container -->
+
+
+  
+  <!----EXPLORE Ends---->
+
+<div class="row data-section" >
+
+  <!-------- Login and Registration Section!!!---------->
+  <!-- <div *ngIf="!authService.loggedIn()" class="col-md">
+    <app-login></app-login>
+    <app-register></app-register>
+  </div> -->
+
+  <!-------- About E-MART Section!!!---------->
+  <!-- <div class="col-md   ">
+    <h1 class="text-primary text-center m-3"><i class="fa fa-shopping-cart pr-2"></i>E-MART</h1>
+    <!-- <p class="m-4">
+     
+    </p> 
+    <p class="m-4">
+      Welcome to E-MART, <br> E-MART is India's leading retail fashion and consumer electronics. 
+      We are proud of E-MART, which continues to evolve and lead the Online market, experiencing
+      exceptional growth.
+    </p>
+    <p class="text-center">
+      <img
+        src="./assets/images/shopping_img.jpg"
+        class="img-fluid rounded border border-danger p-1"
+        alt="Products Info"
+      />
+    </p>
+  </div> -->
+ <!-------- About E-MART Section Ends!!!---------->
+
+    <!-------- Login and Registration Section!!!---------->
+    <!-- <div *ngIf="!authService.loggedIn()" class="col-md">
+      <app-login></app-login>
+      <app-register></app-register>
+    </div> -->
+    <!-------- Notifications Section Starts!!!---------->
+    <div *ngIf="user" class="text-center  bg-info border rounded p-1 mx-5 pt-5"
+    style="padding-top: 20px;">
+      <app-notification-panel [user]="user"></app-notification-panel>
+      <img
+      src="./assets/images/start-shopping-image.jpg"
+      class="img-fluid rounded border border-danger p-1"
+      alt="Products Info" style="height:250px;"
+    />
+    <!-- <button routerLink="/book">BooksMart</button> -->
+    </div>
+    <!-------- Notifications Section Ends!!!---------->
+  <!-------- Rightside E-MART Section!!!---------->
+  <div class="col-md-4  p-4">
+      <div class="offercontent-box alert alert-success link" (click)="openForm()"><strong>50% - 80% Off </strong>on <br> Computer Accessories  <br>
+     <img src="../../../assets/images/firstpage/keyboard.jpg" alt="" height="100px" width="100px">
+     <img src="../../../assets/images/firstpage/mouse_img.png" alt="" height="100px" width="120px"> <br>
+     &nbsp;  &nbsp;  &nbsp;
+     <img src="../../../assets/images/firstpage/pendrive.jpg" alt="" height="100px" width="120px"><br>
+     <strong>Limited Period Offer! | Huury Up!</strong>
+      </div>
+  </div>
+  <div class="col-md-4  p-4">
+    <div class="offercontent-box alert alert-primary link" (click)="openForm()"><strong>Deal of the Day! </strong><br>
+      up to <s> <strong> 30% </strong> </s> <strong> 50% off</strong> <br>
+      <img src="../../../assets/images/firstpage/luggage_bag.png" alt="" height="100px" width="100px">
+      &nbsp;  &nbsp;  &nbsp;  
+      <img src="../../../assets/images/firstpage/tshirt.jpg" alt="" height="100px" width="120px"> 
+      &nbsp;  &nbsp;  &nbsp; 
+      <img src="../../../assets/images/firstpage/pods.png" alt="" height="100px" width="120px"> 
+      &nbsp;  &nbsp;  &nbsp; 
+      <img src="../../../assets/images/firstpage/Apple-13.jpeg" alt="" height="100px" width="120px"> <br>
+      <strong>Exclusive Today Offers!</strong>
+       </div>
+  </div>
+  <div class="col-md-4  p-4">
+
+
+    <!-- spinner -->
+       <div class="alert alert-warning">
+              <p class="m-2">
+                Welcome to E-MART, <br> E-MART is becoming India's leading retail fashion and consumer electronics. 
+                <br> We are proud of our E-MART Customers.             </p>
+              <div *ngIf="isLoading" class="spinner-border text-danger" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
+              <div class="text-center text-dark border rounded p-1 mx-5 my-4">
+                <span>Toatl <strong>{{ productsTotal }}</strong></span>
+                products are now available in our E-MART!<br />
+                <span>A total of <strong>{{ ordersTotal }}</strong></span>
+                orders have been purchased on our site So far.
+              </div>
+        </div>
+            <!-- <button routerLink="/book">BooksMart</button> -->
+            <!---Image right side-->
+            <!-- <p class="mx-4"><img src="./assets/images/online-shopping-rightside.jpg" class="img-fluid rounded" alt="Products Info" /></p> -->
+            <!---Image right side closed-->
+            <!-- <div *ngIf="user" class="text-center model bg-warning border rounded p-1 mx-5">
+              <app-notification-panel [user]="user"></app-notification-panel>
+            </div> -->
+  </div><!---column close-->
+
+
+</div><!---row  close-->
+
+<!-- Start Responsive Slider BODY section -->
+<!-- Carousel wrapper -->
+
+    <!-- <div class="carousel-item active"> -->
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3  mb-4 ">
+            <div class="card">
+              <!-- <img
+                src="https://mdbootstrap.com/img/new/standard/nature/187.jpg"
+                class="card-img-top"
+                alt="..."
+              /> -->
+              <img
+                src="../../../assets/images/firstpage/Apple-13.jpeg"
+                class="card-img-top"
+                alt="..."
+              />
+              <div class="card-body">
+                <h5 class="card-title">Mobile </h5>
+                <p class="card-text">
+                  Some sample text.
+                </p>
+                <button  class="btn btn-success" (click)="openForm()">Add to Cart</button>
+                <button class="btn btn-warning" (click)="openForm()">Buy Now</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-3 mb-3 ">
+            <div class="card">
+              <img
+                src="../../../assets/images/firstpage/chess.jpg"
+                class="card-img-top"
+                alt="..."
+              />
+              <div class="card-body">
+                <h5 class="card-title">Chess board</h5>
+                <p class="card-text">
+                  Some sample text.
+                </p>
+                <button  class="btn btn-success" (click)="openForm()">Add to Cart</button>
+                <button class="btn btn-warning" (click)="openForm()">Buy Now</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-3 mb-3 ">
+            <div class="card">
+              <img
+                src="../../../assets/images/firstpage/earphones.png"
+                class="card-img-top"
+                alt="..."
+              />
+              <div class="card-body">
+                <h5 class="card-title">Wired headset</h5>
+                <p class="card-text">
+                  Some sample text.
+                </p>
+                <button  class="btn btn-success" (click)="openForm()">Add to Cart</button>
+                <button class="btn btn-warning" (click)="openForm()">Buy Now</button>
+              </div>
+            </div>
+          </div><!----column closed---->
+          <div class="col-lg-3 mb-3  ">
+            <div class="card">
+              <img
+                src="../../../assets/images/firstpage/tshirt.jpg"
+                class="card-img-top"
+                alt="..."
+              />
+              <div class="card-body">
+                <h5 class="card-title">T-Shirt</h5>
+                <p class="card-text">
+                  Some sample text.
+                </p>
+                <button href="#!" class="btn btn-success" (click)="openForm()">Add to Cart</button>
+                <button href="#!" class="btn btn-warning" (click)="openForm()">Buy Now</button>
+              </div>
+            </div>
+          </div><!----column closed---->
+
+        </div><!----row closed---->
+      </div><!---container closed--->
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3  mb-4 ">
+            <div class="card">
+              <img
+                src="../../../assets/images/firstpage/keyboard.jpg"
+                class="card-img-top"
+                alt="..."
+              />
+              <div class="card-body">
+                <h5 class="card-title">Keyboard </h5>
+                <p class="card-text">
+                  Some sample text.
+                </p>
+                <button  class="btn btn-success" (click)="openForm()">Add to Cart</button>
+                <button class="btn btn-warning" (click)="openForm()">Buy Now</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-3 mb-4 ">
+            <div class="card">
+              <img
+                src="../../../assets/images/firstpage/tshirt.jpg"
+                class="card-img-top"
+                alt="..."
+              />
+              <div class="card-body">
+                <h5 class="card-title">T-Shirt</h5>
+                <p class="card-text">
+                  Some sample text.
+                </p>
+                <button  class="btn btn-success" (click)="openForm()">Add to Cart</button>
+                <button class="btn btn-warning" (click)="openForm()">Buy Now</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-3 mb-4  ">
+            <div class="card">
+              <img
+                src="../../../assets/images/firstpage/pods.png"
+                class="card-img-top"
+                alt="..."
+              />
+              <div class="card-body">
+                <h5 class="card-title">Airpods</h5>
+                <p class="card-text">
+                  Some sample text.
+                  <!-- Some quick example text to build on the card title and make up the bulk
+                  of the card's content. -->
+                </p>
+                <button  class="btn btn-success" (click)="openForm()">Add to Cart</button>
+                <button class="btn btn-warning" (click)="openForm()">Buy Now</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 mb-3  ">
+            <div class="card">
+              <img
+                src="../../../assets/images/firstpage/earphones.png"
+                class="card-img-top"
+                alt="..."
+              />
+              <div class="card-body">
+                <h5 class="card-title">headset</h5>
+                <p class="card-text">
+                  Some sample text.
+                </p>
+                <button  class="btn btn-success" (click)="openForm()">Add to Cart</button>
+                <button class="btn btn-warning" (click)="openForm()">Buy Now</button>
+              </div>
+            </div>
+          </div><!----column closed---->
+
+        </div><!----row closed---->
+      </div><!---container closed--->
+  
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3  mb-4 ">
+            <div class="card">
+              <!-- <img
+                src="https://mdbootstrap.com/img/new/standard/nature/187.jpg"
+                class="card-img-top"
+                alt="..."
+              /> -->
+              <img
+                src="../../../assets/images/firstpage/luggage_bag.png"
+                class="card-img-top"
+                alt="..."
+              />
+              <div class="card-body">
+                <h5 class="card-title">Lugguage bag</h5>
+                <p class="card-text">
+                  Some sample text.
+                </p>
+                <button  class="btn btn-success" (click)="openForm()">Add to Cart</button>
+                <button class="btn btn-warning" (click)="openForm()">Buy Now</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-3 mb-3 ">
+            <div class="card">
+              <img
+                src="../../../assets/images/firstpage/chess.jpg"
+                class="card-img-top"
+                alt="..."
+              />
+              <div class="card-body">
+                <h5 class="card-title">Chess board</h5>
+                <p class="card-text">
+                  Some sample text.
+                </p>
+                <button  class="btn btn-success" (click)="openForm()">Add to Cart</button>
+                <button class="btn btn-warning" (click)="openForm()">Buy Now</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-3 mb-3 ">
+            <div class="card">
+              <img
+                src="../../../assets/images/firstpage/keyboard.jpg"
+                class="card-img-top"
+                alt="..."
+              />
+              <div class="card-body">
+                <h5 class="card-title">Keyboard</h5>
+                <p class="card-text">
+                  Some sample text.
+                </p>
+                <button  class="btn btn-success" (click)="openForm()">Add to Cart</button>
+                <button class="btn btn-warning" (click)="openForm()">Buy Now</button>
+              </div>
+            </div>
+          </div><!----column closed---->
+          <div class="col-lg-3 mb-3  ">
+            <div class="card">
+              <img
+                src="../../../assets/images/firstpage/tshirt.jpg"
+                class="card-img-top"
+                alt="..."
+              />
+              <div class="card-body">
+                <h5 class="card-title">T-Shirt</h5>
+                <p class="card-text">
+                  Some sample text.
+                </p>
+                <button href="#!" class="btn btn-success" (click)="openForm()">Add to Cart</button>
+                <button href="#!" class="btn btn-warning" (click)="openForm()">Buy Now</button>
+              </div>
+            </div>
+          </div><!----column closed---->
+
+        </div><!----row closed---->
+      </div><!---container closed--->
+  
+<!-- Carousel wrapper -->
+
+<!-- End Responsive Slider BODY section -->
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- The Modal -->
+<div class="modal" id="mainModal" [ngStyle]="{ display: display }">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header bg-dark text-white text-center">
+        <h4 class="modal-title" [innerHTML]="modalHeader ? modalHeader : 'Success!'"></h4>
+        <button type="button" (click)="onCloseHandled()" class="close" data-dismiss="modal" routerLink="/">
+          &times;
+        </button>
+      </div>
+      <!-- Modal body -->
+      <div class="modal-body" *ngIf="modalBody" [innerHTML]="modalBody"></div>
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" (click)="onCloseHandled()" class="btn btn-danger" data-dismiss="modal" routerLink="/">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- The Modal -->
+<div class="modal" id="mainModal" [ngStyle]="{ display: display1 }">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header bg-info text-white text-center">
+        <h4 class="modal-title" [innerHTML]="modalHeader1 ? modalHeader1 : 'Success!'"></h4>
+        <button type="button" (click)="onCloseHandled1()" class="close" data-dismiss="modal" routerLink="/">
+          &times;
+        </button>
+      </div>
+      <!-- Modal body -->
+      <div class="modal-body" *ngIf="modalBody1" [innerHTML]="modalBody1" ></div>
+      <!-- Modal footer -->
+      <div class="modal-footer" >
+        <button type="button" (click)="onCloseHandled1()" class="btn btn-danger" data-dismiss="modal" routerLink="/login">
+          Login
+        </button>
+        <button type="button" (click)="onCloseHandled1()" class="btn btn-danger" data-dismiss="modal" routerLink="/register">
+          Register
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+ <!-- EXPLORE Starts -->
+    

@@ -1,0 +1,13 @@
+
+.footer1 {
+    display: flex;
+    width: 100%;
+    height: 50px;
+    align-content: center;
+    position: sticky;
+}
+.footer-note {
+    font-size:18px;
+    margin: auto;
+ 
+}

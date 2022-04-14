@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-{{ .Chart.Name }}-books
+  labels: 
+    app: {{ .Release.Name }}-{{ .Chart.Name }}-books
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-{{ .Chart.Name }}-books
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-{{ .Chart.Name }}-books
+    spec:
+      containers:
+      - name: {{ .Release.Name }}-{{ .Chart.Name }}-books
+        image: {{ .Values.image.books.repository }}:{{ .Values.image.books.tag }}
+        imagePullPolicy: Always
+        ports:
+        - name: ebooksapi-port
+          containerPort: 9000
+        env: 
+         - name: MONGOURI
+           value: 'mongodb://emongo:27017/epoc'
+         - name: SECRETORKEY
+           value: 'k1234e6s78h9av'
+      imagePullSecrets:
+      - name: regcred 
+     

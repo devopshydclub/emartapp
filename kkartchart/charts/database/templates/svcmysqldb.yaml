@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: emartdb
+spec:
+  ports:
+  - port: {{ .Values.service.mysql.port }}
+    targetPort: 3306
+    protocol: TCP
+  selector:
+    app: {{ .Release.Name }}-{{ .Chart.Name }}-mysql
+  type: {{ .Values.service.mysql.type }}

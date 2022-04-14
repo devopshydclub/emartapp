@@ -1,0 +1,19 @@
+image:
+  books: 
+    repository: repository.k8sengineers.com/apexrepo/books
+    tag: latest
+  main: 
+    repository: repository.k8sengineers.com/apexrepo/main
+    tag: latest
+service:
+  books:
+    port: 9000
+    type: ClusterIP
+  main:
+    port: 5000
+    type: ClusterIP
+ingress:
+  host: kubekart.k8sengineers.com
+  path:
+    main: /api
+    books: /webapi

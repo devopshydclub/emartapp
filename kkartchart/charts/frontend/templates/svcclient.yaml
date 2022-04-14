@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-{{ .Chart.Name }}-client
+spec:
+  ports:
+  - port: {{ .Values.service.client.port }}
+    targetPort: eclient-port
+    protocol: TCP
+  selector:
+    app: {{ .Release.Name }}-{{ .Chart.Name }}-client
+  type: {{ .Values.service.client.type }}

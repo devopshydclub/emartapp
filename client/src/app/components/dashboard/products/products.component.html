@@ -1,0 +1,137 @@
+<!-- spinner -->
+<div *ngIf="isLoading" class="text-center mb-2">
+  <div class="spinner-border text-danger" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+<!-- search bar -->
+<!-- fetching data from the server -->
+<div class="input-group mb-2 mx-auto" style="width:60%">
+  <input type="text" #searchProducts class="form-control" placeholder="Search for products..." />
+  <div class="input-group-append">
+    <button (click)="onSearch(searchProducts.value)" class="btn btn-warning"><i class="fas fa-search"></i></button>
+  </div>
+</div>
+<!-- using pipe -->
+<!-- <input type="text" name="search" class="mb-2" placeholder="Search for products..." [(ngModel)]="filteredStatus" /> -->
+
+<!-- category bar -->
+<div class="d-flex flex-wrap justify-content-center p-1 bg-light">
+  <button
+    *ngFor="let category of categories"
+    (click)="onCategorySelected(category.cat_name)"
+    type="button"
+    class="px-2 m-2 btn btn-dark btn-sm"
+  >
+    {{ category?.cat_name }}
+  </button>
+  <button type="button" (click)="onShowAllProducts()" class="px-2 m-2 btn btn-primary btn-sm">
+    Show All Products
+  </button>
+</div>
+
+<!-- products -->
+<div *ngIf="products" class="d-flex flex-wrap justify-content-center border">
+  <div *ngIf="products.length == 0" class="text-center m-4">
+    <h3>There are no products</h3>
+    <button class="btn btn-outline-primary" (click)="onShowAllProducts()">Go back to full product list</button>
+  </div>
+
+  <div
+    *ngFor="let product of (products | filter: filteredStatus:'prod_name')"
+    class="card text-center m-1"
+    style="width:200px"
+    (click)="user?.role ? onProductEdit(product) : null"
+    [ngStyle]="user?.role && { cursor: 'pointer' }"
+  >
+    <!-- spinner -->
+    <div *ngIf="isLoading" class="spinner-border text-danger mx-auto" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+
+    <img [src]="product.imageUrl" [alt]="product.prod_name" style="width:100%" class="p-1" />
+    <small>Price: {{ product.price | currency: "INR":"symbol":"1.2-2" }}</small>
+    <h6 class="card-title text-danger">{{ product.prod_name }}</h6>
+
+    <!-- Button to Open the Modal -->
+    <button
+      *ngIf="!user?.role && !orderStatus"
+      type="button"
+      class="btn btn-info"
+      data-toggle="modal"
+      [attr.data-target]="'#Modal' + product.id"
+    >
+      <i  class="fa fa-plus-circle pr-2"></i>Add Product
+    </button>
+    <!-- The Modal -->
+    <div class="modal" [id]="'Modal' + product?.id">
+      <div class="modal-dialog ">
+        <div class="modal-content">
+          <!-- Modal Header -->
+          <div class="modal-header btn-primary">
+            <h4 class="modal-title">{{ product.prod_name }}</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <!-- Modal form -->
+          <form>
+            <!-- Modal body -->
+            <div class="modal-body d-flex flex-row justify-content-around align-content-center align-items-center ">
+              <div class="p-1" style="width:100px">
+                <img [src]="product.imageUrl" [alt]="product.prod_name" class="img-fluid img-thumbnail" />
+              </div>
+              <div class="p-1">
+                <h6>Price /per unit</h6>
+                {{ product.price | currency: "INR":"symbol":"1.2-2" }}
+              </div>
+              <div class="p-1">
+                <h6>Quantity</h6>
+                <input
+                  id="quantity"
+                  [(ngModel)]="product.quantity"
+                  name="quantity"
+                  type="number"
+                  placeholder="0"
+                  min="0"
+                  class="form-control quantity-input"
+                />
+              </div>
+              <div class="p-1">
+                <h6>Total Price</h6>
+                {{ product.price * product.quantity | currency: "INR":"symbol":"1.2-2" }}
+              </div>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+              <button type="button" (click)="onAddProductToCart(product)" class="btn btn-success" data-dismiss="modal">
+                <i class="fa fas-cart-plus" class="mr-2"></i>Add to Cart
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- The Modal -->
+<div class="modal" id="myModal" [ngStyle]="{ display: display }">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header bg-dark text-white text-center">
+        <h4 class="modal-title" [innerHTML]="modalHeader ? modalHeader : 'Success!'"></h4>
+        <button type="button" class="close" data-dismiss="modal" routerLink="/">
+          &times;
+        </button>
+      </div>
+      <!-- Modal body -->
+      <div class="modal-body" *ngIf="modalBody" [innerHTML]="modalBody"></div>
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal" routerLink="/">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
