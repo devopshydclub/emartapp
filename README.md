@@ -1,1 +1,1 @@
-# emart-app
+# emart-app Is built inorder to learn and practice how to containerize microservices!!!!
