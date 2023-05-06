@@ -16,9 +16,7 @@ services:
             - "5000:5000"
         container_name: api
         depends_on:
-            - nginx
-        depends_on:
-            [emongo]
+            [nginx, emongo]
 
     webapi:
         build:
