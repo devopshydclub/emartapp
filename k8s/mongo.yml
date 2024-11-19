@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: emongo
+  namespace: emartapp-ns
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: emartmongo
+  template:
+    metadata:
+      labels:
+        app: emartmongo
+    spec:
+      containers:
+      - name: mongo
+        image: tireni/emartmongo
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        volumeMounts:
+          - mountPath: /data/db  
+            name: emongo-storage        
+        ports:
+          - name: emongo-port 
+            containerPort: 27017
+        env:
+          - name: MONGO_INITDB_DATABASE
+            valueFrom:
+              configMapKeyRef:
+                name: emongo-cm
+                key: MONGO_INITDB_DATABASE
+      volumes:
+        - name: emongo-storage
+          persistentVolumeClaim: 
+            claimName: emongo-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: emongo
+  namespace: emartapp-ns
+spec:
+  selector:
+    app: emartmongo
+  ports:
+  - port: 27017
+    targetPort: emongo-port
+    protocol: TCP
+  type: ClusterIP
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: emongo-cm
+  namespace: emartapp-ns
+data:
+  MONGO_INITDB_DATABASE: epoc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: emongo-pvc
+  namespace: emartapp-ns
+spec:
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi

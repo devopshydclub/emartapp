@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api  
+  namespace: emartapp-ns
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: emartapi 
+  template:
+    metadata:
+      labels:
+        app: emartapi
+    spec:
+      containers:
+      - name: emartapp-api  
+        image: tireni/emartapp-api
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+          - name: api-port
+            containerPort: 5000 
+      initContainers:
+        - name: init-emongo 
+          image: busybox
+          command: ['sh', '-c', 'until nslookup emongo.emartapp-ns.svc.cluster.local ; do echo waiting for mydb; sleep 2; done']
+        - name: init-nginx
+          image: busybox
+          command: ['sh', '-c', 'until nslookup nginx.emartapp-ns.svc.cluster.local ; do echo waiting for mydb; sleep 2; done']
+        
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api
+  namespace: emartapp-ns
+spec:
+  selector:
+    app: myapp
+  ports:
+    - port: 5000
+      targetPort: api-port
+      protocol: TCP
+  type: ClusterIP

@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapi
+  namespace: emartapp-ns
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: emartwebapi
+  template:
+    metadata:
+      labels:
+        app: emartwebapi
+    spec:
+      containers:
+      - name: emartapp-webapi
+        image: tireni/emartapp-webapi
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+          - name: webapi-port
+            containerPort: 9000
+      initContainers:
+        - name: init-emartdb
+          image: busybox
+          command: ['sh', '-c', 'until nslookup emartdb.emartapp-ns.svc.cluster.local ; do echo waiting for mydb; sleep 2; done']
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapi
+  namespace: emartapp-ns
+spec:
+  selector:
+    app: emartwebapi
+  ports:
+  - port: 9000
+    targetPort: webapi-port
+    protocol: TCP
+  type: ClusterIP

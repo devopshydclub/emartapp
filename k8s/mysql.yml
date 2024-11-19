@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: emartdb
+  namespace: emartapp-ns
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: emartmysql
+  template:
+    metadata:
+      labels:
+        app: emartmysql
+    spec:
+      containers:
+      - name: mysql
+        image: tireni/emartmysql
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        volumeMounts:
+          - mountPath: /var/lib/mysql  
+            name: emartdb-storage        
+        ports:
+          - name: emartdb-port 
+            containerPort: 27017
+        env:
+          - name: MYSQL_DATABASE
+            valueFrom:
+              configMapKeyRef:
+                name: emartdb-cm
+                key: MYSQL_DATABASE
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: emartdb-cret
+                key: MYSQL_ROOT_PASSWORD          
+      volumes:
+        - name: emartdb-storage
+          persistentVolumeClaim: 
+            claimName: emartdb-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: emongo
+  namespace: emartapp-ns
+spec:
+  selector:
+    app: emartmysql
+  ports:
+  - port: 27017
+    targetPort: emartdb-port
+    protocol: TCP
+  type: ClusterIP
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: emartdb-cm
+  namespace: emartapp-ns
+data:
+  MYSQL_DATABASE: books
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: emartdb-cret
+type: Opaque
+data:
+  MYSQL_ROOT_PASSWORD: ZW1hcnRkYnBhc3M=
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: emartdb-pvc
+  namespace: emartapp-ns
+spec:
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi

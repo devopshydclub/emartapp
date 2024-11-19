@@ -1,0 +1,30 @@
+name: Build and publish to dockerhub
+
+on:
+    push:
+      branches:
+        - main
+    pull_request:
+      branches:
+        - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Code
+        uses: action/checkout@v4
+
+      - name: build images 
+        run: |
+          docker build -t tireni/emartapp-client ./client 
+          docker build -t tireni/emartapp-webapi ./javaapi
+          docker build -t tireni/emartapp-api ./nodeapi
+
+      - name: push image to docker hub
+        run: |
+          echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+          docker push tireni/emartapp-client:latest 
+          docker push tireni/emartapp-webapi:latest
+          docker push tireni/emartapp-api:latest
