@@ -1,4 +1,4 @@
-FROM openjdk:8 AS BUILD_IMAGE
+FROM amazoncorretto:8 AS build
 WORKDIR /usr/src/app/
 RUN apt update && apt install maven -y
 COPY ./ /usr/src/app/
